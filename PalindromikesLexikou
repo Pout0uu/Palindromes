@@ -1,0 +1,70 @@
+package A12;
+
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.PrintStream;
+import java.util.Scanner;
+
+public class PalindromikesLexikou {
+   public PalindromikesLexikou() {
+   }
+
+   public static void main(String[] var0) {
+      System.setOut(new PrintStream(System.out, true));
+      long var1 = System.currentTimeMillis();
+
+      try {
+         FileInputStream var3 = new FileInputStream("../Resources/gr.dic");
+         Scanner var4 = new Scanner(var3, "UTF-8");
+         String[] var5 = new String[10000];
+         int var6 = 0;
+         int var7 = 0;
+         int var8 = 0;
+         int var9 = 0;
+         int var10 = 0;
+
+         while(var4.hasNextLine()) {
+            String var11 = var4.nextLine();
+            var9 += var11.length();
+            ++var6;
+            boolean var12 = PalindromikesFraseis.isPalindromikiFrash(var11);
+            if (var12) {
+               ++var7;
+               var5[var10] = var11;
+               ++var10;
+            } else {
+               ++var8;
+            }
+         }
+
+         for(int var19 = 0; var19 < var10; ++var19) {
+            for(int var22 = var19 + 1; var22 < var10; ++var22) {
+               if (var5[var19].length() > var5[var22].length()) {
+                  String var13 = var5[var19];
+                  var5[var19] = var5[var22];
+                  var5[var22] = var13;
+               }
+            }
+         }
+
+         for(int var20 = var10 - 1; var20 >= 0; --var20) {
+            System.out.println(var5[var20]);
+         }
+
+         double var21 = (double)var9 / (double)var6;
+         double var23 = (double)(var7 * 100) / (double)var6;
+         System.out.println("Total words: " + var6);
+         System.out.println("Palindromes: " + var7);
+         System.out.println("Non-palindromes: " + var8);
+         System.out.println("Total letters: " + var9);
+         System.out.println("Average letters per word: " + var21);
+         System.out.println("Percentage of palindromes: " + var23 + "%");
+         long var15 = System.currentTimeMillis();
+         float var17 = (float)(var15 - var1) / 1000.0F;
+         System.out.println(var17 + " seconds");
+      } catch (IOException var18) {
+         System.out.println(var18);
+      }
+
+   }
+}
